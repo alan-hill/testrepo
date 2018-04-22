@@ -2,44 +2,70 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'gatsby-link'
 
+import { Grid, Card } from "semantic-ui-react";
+
+const styles = {
+  layout: {
+    textAlign: "center"
+  },
+
+  welcome: {
+    paddingTop: 25,
+    width: 700,
+    margin: "0 auto"
+  },
+
+  welcomeText: {
+    fontSize: 16
+  },
+
+  docIndex: {
+    paddingTop: 25
+  }
+}
+
 export default class IndexPage extends React.Component {
   render() {
     const { data } = this.props
     const { edges: posts } = data.allMarkdownRemark
 
     return (
-      <section className="section">
-        <div className="container">
-          <div className="content">
-            <h1 className="has-text-weight-bold is-size-2">Latest Stories</h1>
-          </div>
-          {posts
-            .filter(post => post.node.frontmatter.templateKey === 'blog-post')
-            .map(({ node: post }) => (
-              <div
-                className="content"
-                style={{ border: '1px solid #eaecee', padding: '2em 4em' }}
-                key={post.id}
-              >
-                <p>
-                  <Link className="has-text-primary" to={post.fields.slug}>
-                    {post.frontmatter.title}
-                  </Link>
-                  <span> &bull; </span>
-                  <small>{post.frontmatter.date}</small>
-                </p>
-                <p>
-                  {post.excerpt}
-                  <br />
-                  <br />
-                  <Link className="button is-small" to={post.fields.slug}>
-                    Keep Reading →
-                  </Link>
-                </p>
-              </div>
-            ))}
+      <div style={styles.layout}>
+        <div style={styles.welcome}>
+          <h3>Documentation Demo</h3>
+          <p style={styles.welcomeText}>This is a demo using Netlify CMS and GatsbyJS to build a documentation site with live changes.<br />
+             Just sign in with your Github account and changes will be published to github.com/alan_hill/testrepo.<br />
+             These changes will then be reflected on ...herokuapp.com.
+          </p>
         </div>
-      </section>
+        <div style={styles.docIndex}>
+          <Grid>
+            <Grid.Row columns={3}>
+              <Grid.Column></Grid.Column>
+              <Grid.Column><h3>Current Docs</h3></Grid.Column>
+              <Grid.Column></Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={3} centered>
+              {posts
+                .filter(post => post.node.frontmatter.templateKey === 'documentation')
+                .map(({ node: post }) => (
+                  <Grid.Column key={post.id}>
+                    <Card href={post.fields.slug}>
+                      <Card.Content>
+                        <Card.Header>
+                          {post.frontmatter.title}
+                        </Card.Header>
+                        <Card.Description>
+                          <p>{post.description}</p>
+                        </Card.Description>
+                      </Card.Content>
+                    </Card>
+                  </Grid.Column>
+                ))}
+            </Grid.Row>
+          </Grid>
+        </div>
+      </div>
     )
   }
 }
@@ -52,12 +78,11 @@ IndexPage.propTypes = {
   }),
 }
 
-export const pageQuery = graphql`
+export const pageQuery = graphql `
   query IndexQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    allMarkdownRemark {
       edges {
         node {
-          excerpt(pruneLength: 400)
           id
           fields {
             slug
@@ -65,7 +90,7 @@ export const pageQuery = graphql`
           frontmatter {
             title
             templateKey
-            date(formatString: "MMMM DD, YYYY")
+            description
           }
         }
       }
