@@ -31,6 +31,7 @@ export const DocumentationTemplate = ({
 
                 <Item.Description>
                   <p>{description}</p>
+                  <PostContent content={content} />
                 </Item.Description>
               </Item.Content>
             </Item>
