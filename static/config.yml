@@ -1,0 +1,32 @@
+backend:
+  name: github
+  repo: alan-hill/testrepo
+  branch: master
+  base_url: https://938fc926.ngrok.io
+
+media_folder: static/img
+public_folder: /img
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "food-documentation"
+    label: "Documentation - Food"
+    folder: "src/pages/documentation/food"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "documentation"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
+  - name: "music-documentation"
+    label: "Documentation - Music"
+    folder: "src/pages/documentation/music"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Template Key", name: "templateKey", widget: "hidden", default: "documentation"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
