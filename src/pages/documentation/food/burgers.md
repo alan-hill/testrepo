@@ -1,7 +1,7 @@
 ---
 templateKey: documentation
 title: Burgers
-description: A great recipe for an amazing, authentic, real life burger you can eat.
+description: I really like burgers... they are excellent.
 ---
 
 # Oh Burger thy Burger
